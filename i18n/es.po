@@ -1,0 +1,381 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"POT-Creation-Date: 2021-07-22T14:45:14.720Z\n"
+"PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgid "Aggregation Type"
+msgstr ""
+
+msgid "Aggregation Levels"
+msgstr ""
+
+msgid "Domain Type"
+msgstr ""
+
+msgid "Value Type"
+msgstr ""
+
+msgid "Zero Is Significant"
+msgstr ""
+
+msgid "Category Combo"
+msgstr ""
+
+msgid "Code"
+msgstr ""
+
+msgid "Reference {{template}} was not found on this instance"
+msgstr ""
+
+msgid "Columns to show in table"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Column"
+msgstr ""
+
+msgid "Data elements"
+msgstr ""
+
+msgid "Programs"
+msgstr ""
+
+msgid "Org unit counts"
+msgstr ""
+
+msgid "Constants"
+msgstr ""
+
+msgid "Reporting rates"
+msgstr ""
+
+msgid "Data Element"
+msgstr ""
+
+msgid "Organisation unit group"
+msgstr ""
+
+msgid "Constant"
+msgstr ""
+
+msgid "Category option combo"
+msgstr ""
+
+msgid "Value must be an array"
+msgstr ""
+
+msgid "You need to at least select one option"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Created"
+msgstr ""
+
+msgid "Updated"
+msgstr ""
+
+msgid "Deleted"
+msgstr ""
+
+msgid "Ignored"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Identifier"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Import Results"
+msgstr ""
+
+msgid "Ok"
+msgstr ""
+
+msgid "Predictors"
+msgstr ""
+
+msgid "Import"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Summary"
+msgstr ""
+
+msgid "Messages"
+msgstr ""
+
+msgid "JSON Response"
+msgstr ""
+
+msgid "Back"
+msgstr "Volver"
+
+msgid "Help"
+msgstr "Ayuda"
+
+msgid "General info"
+msgstr ""
+
+msgid "Generator"
+msgstr ""
+
+msgid "Samples"
+msgstr ""
+
+msgid "Scheduling"
+msgstr ""
+
+msgid "Error saving predictor"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Unable to validate"
+msgstr ""
+
+msgid "Please provide a valid identifier"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Output data element"
+msgstr ""
+
+msgid "Output category combo"
+msgstr ""
+
+msgid "Period type"
+msgstr ""
+
+msgid "Annual sample count"
+msgstr ""
+
+msgid "Sequential sample count"
+msgstr ""
+
+msgid "Sequential skip count"
+msgstr ""
+
+msgid "Organisation unit levels"
+msgstr ""
+
+msgid "Predictor groups"
+msgstr ""
+
+msgid "Generator description"
+msgstr ""
+
+msgid "Missing value strategy"
+msgstr ""
+
+msgid "Generator formula"
+msgstr ""
+
+msgid "Sample skip test description"
+msgstr ""
+
+msgid "Sample skip test formula"
+msgstr ""
+
+msgid "Sequence"
+msgstr ""
+
+msgid "Variable"
+msgstr ""
+
+msgid "Daily"
+msgstr ""
+
+msgid "Weekly"
+msgstr ""
+
+msgid "Weekly starting Wednesday"
+msgstr ""
+
+msgid "Weekly starting Thursday"
+msgstr ""
+
+msgid "Weekly starting Saturday"
+msgstr ""
+
+msgid "Weekly starting Sunday"
+msgstr ""
+
+msgid "Biweekly"
+msgstr ""
+
+msgid "Monthly"
+msgstr ""
+
+msgid "Bi-monthly"
+msgstr ""
+
+msgid "Quarterly"
+msgstr ""
+
+msgid "Six-monthly"
+msgstr ""
+
+msgid "Six-monthly starting April"
+msgstr ""
+
+msgid "Six-monthly starting November"
+msgstr ""
+
+msgid "Yearly"
+msgstr ""
+
+msgid "Financial year starting April"
+msgstr ""
+
+msgid "Financial year starting July"
+msgstr ""
+
+msgid "Financial year starting October"
+msgstr ""
+
+msgid "Financial year starting November"
+msgstr ""
+
+msgid "Skip if any value is missing"
+msgstr ""
+
+msgid "Skip if all values are missing"
+msgstr ""
+
+msgid "Never skip"
+msgstr ""
+
+msgid "Invalid option"
+msgstr ""
+
+msgid "Saving predictors"
+msgstr ""
+
+msgid "Network error"
+msgstr ""
+
+msgid "Import predictors"
+msgstr ""
+
+msgid "Edit predictors"
+msgstr ""
+
+msgid "Column settings"
+msgstr ""
+
+msgid "Error saving predictors"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Edit predictor"
+msgstr ""
+
+msgid "New predictor"
+msgstr ""
+
+msgid "Unable to load predictor {{id}}"
+msgstr ""
+
+msgid "Open in maintenance"
+msgstr ""
+
+msgid "Running predictors"
+msgstr ""
+
+msgid "Exporting predictors"
+msgstr ""
+
+msgid "Deleting predictors"
+msgstr ""
+
+msgid "Output category option"
+msgstr ""
+
+msgid "Formula"
+msgstr ""
+
+msgid "Sample skip test"
+msgstr ""
+
+msgid "Last Updated"
+msgstr ""
+
+msgid "Last updated"
+msgstr ""
+
+msgid "Last updated by"
+msgstr ""
+
+msgid "Created by"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Run"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Import excel"
+msgstr ""
+
+msgid "Download empty excel template"
+msgstr ""
+
+msgid "Scheduling options"
+msgstr ""
+
+msgid "Search by name"
+msgstr ""
+
+msgid "Couldn't read the file because it's not valid"
+msgstr ""
+
+msgid "Reading files"
+msgstr ""
+
+msgid "Last updated date"
+msgstr ""
+
+msgid "Invalid output combo"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Recurrence (hours)"
+msgstr ""
+
+msgid "Delay between executions (seconds)"
+msgstr ""
