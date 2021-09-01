@@ -2,6 +2,7 @@ import { Menu, Pagination } from "@dhis2/ui";
 import i18n from "@eyeseetea/d2-ui-components/locales";
 import styled from "styled-components";
 import { GenericElementPicker } from "./GenericElementPicker";
+import { ReportingRatePicker } from "./ReportingRatePicker";
 
 export const ItemPicker: React.FC<ItemPickerProps> = ({ type, append }) => {
     switch (type) {
@@ -14,7 +15,7 @@ export const ItemPicker: React.FC<ItemPickerProps> = ({ type, append }) => {
         case "constants":
             return <GenericElementPicker type="constants" append={id => append(`C{${id}}`)} />;
         case "reportingRates":
-            return <p>Not yet implemented</p>;
+            return <ReportingRatePicker append={id => append(`R{${id}}`)} />;
         default:
             return null;
     }
@@ -25,7 +26,7 @@ export const itemPickerTypes = {
     //programs: i18n.t("Programs"),
     orgUnitCounts: i18n.t("Org unit counts"),
     constants: i18n.t("Constants"),
-    //reportingRates: i18n.t("Reporting rates"),
+    reportingRates: i18n.t("Reporting rates"),
 };
 
 export type ItemPickerType = keyof typeof itemPickerTypes;

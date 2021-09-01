@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { getPredictorFieldName, PredictorFormField, RenderPredictorWizardField } from "../predictor-form/PredictorForm";
+import { RenderPredictorWizardField } from "../predictor-form/PredictorForm";
+import { getPredictorFieldName, PredictorFormField } from "../predictor-form/utils";
 
 export const PredictorEditWizardStep: React.FC<PredictorEditWizardStepProps> = ({ fields }) => {
     return (

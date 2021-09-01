@@ -16,11 +16,8 @@ import i18n from "../../../locales";
 import { ColumnSelectorDialog } from "../../components/column-selector-dialog/ColumnSelectorDialog";
 import { ImportSummary } from "../../components/import-summary/ImportSummary";
 import { PageHeader } from "../../components/page-header/PageHeader";
-import {
-    getPredictorFieldName,
-    predictorFormFields,
-    RenderPredictorImportField,
-} from "../../components/predictor-form/PredictorForm";
+import { RenderPredictorImportField } from "../../components/predictor-form/PredictorForm";
+import { predictorFormFields, getPredictorFieldName } from "../../components/predictor-form/utils";
 import { useAppContext } from "../../contexts/app-context";
 import { useGoBack } from "../../hooks/useGoBack";
 

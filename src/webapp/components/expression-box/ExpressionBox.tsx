@@ -23,7 +23,7 @@ export const ExpressionBox: React.FC<ExpressionBoxProps> = ({ expressionType, fo
     const { compositionRoot } = useAppContext();
     const snackbar = useSnackbar();
 
-    const [variables, setVariables] = useState<FormulaVariable[]>([]);
+    const [variables, setVariables] = useState<FormulaVariable[]>();
 
     const [variableListType, setVariableListType] = useState<ItemPickerType>("dataElements");
 
@@ -47,12 +47,14 @@ export const ExpressionBox: React.FC<ExpressionBoxProps> = ({ expressionType, fo
     return (
         <GridContainer>
             <GridItem column={1}>
-                <FormulaEditor
-                    type="predictor-generator"
-                    variables={variables}
-                    value={formula}
-                    onChange={formulaChange}
-                />
+                {variables ? (
+                    <FormulaEditor
+                        type="predictor-generator"
+                        variables={variables}
+                        value={formula}
+                        onChange={formulaChange}
+                    />
+                ) : null}
 
                 <Wrapper>
                     <FunctionButton value={"if("} label={"if"} handleClick={appendToFormula} />

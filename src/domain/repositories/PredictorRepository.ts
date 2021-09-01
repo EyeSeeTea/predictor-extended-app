@@ -10,15 +10,17 @@ export interface PredictorRepository {
 
     list(
         filters?: ListPredictorsFilters,
-        paging?: { page: number; pageSize: number },
+        paging?: { page?: number; pageSize?: number; paging?: false },
         sorting?: TableSorting<PredictorDetails>
     ): FutureData<{ pager: Pager; objects: PredictorDetails[] }>;
 
     getGroups(): FutureData<NamedRef[]>;
 
+    getAllIds(): FutureData<string[]>;
+
     getOutputDataElements(): FutureData<NamedRef[]>;
 
-    run(ids: string[], startDate: Date, endDate: Date): FutureData<any>;
+    run(ids: string[], startDate: Date, endDate: Date, delay?: number): FutureData<RunPredictorsResponse[]>;
 
     save(predictors: Predictor[]): FutureData<MetadataResponse[]>;
 
@@ -40,4 +42,11 @@ export interface ListPredictorsFilters {
     predictorGroups?: string[];
     dataElements?: string[];
     lastUpdated?: string;
+}
+
+export interface RunPredictorsResponse {
+    id: string;
+    name: string;
+    status: "OK" | "ERROR";
+    message: string;
 }

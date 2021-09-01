@@ -1,12 +1,13 @@
 import { UseCase } from "../../compositionRoot";
 import { FutureData } from "../entities/Future";
-import { PredictorRepository } from "../repositories/PredictorRepository";
+import { buildPeriodDate, PeriodObject } from "../entities/SchedulerPeriod";
+import { PredictorRepository, RunPredictorsResponse } from "../repositories/PredictorRepository";
 
 export class RunPredictorsUseCase implements UseCase {
     constructor(private predictorRepository: PredictorRepository) {}
 
-    public execute(predictors: string[]): FutureData<any> {
-        // TODO: FIXME real dates
-        return this.predictorRepository.run(predictors, new Date("1970-01-01"), new Date("2022-01-01"));
+    public execute(predictors: string[], period: PeriodObject, delay?: number): FutureData<RunPredictorsResponse[]> {
+        const { startDate, endDate } = buildPeriodDate(period);
+        return this.predictorRepository.run(predictors, startDate, endDate, delay);
     }
 }

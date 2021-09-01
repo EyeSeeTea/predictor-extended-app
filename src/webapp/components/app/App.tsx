@@ -1,7 +1,6 @@
 import { useConfig } from "@dhis2/app-runtime";
 import { HeaderBar } from "@dhis2/ui";
 import { LoadingProvider, SnackbarProvider } from "@eyeseetea/d2-ui-components";
-import { LinearProgress } from "@material-ui/core";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import _ from "lodash";
 import OldMuiThemeProvider from "material-ui/styles/MuiThemeProvider";
@@ -11,6 +10,8 @@ import { getCompositionRoot } from "../../../compositionRoot";
 import { D2Api } from "../../../types/d2-api";
 import { AppContext, AppContextState } from "../../contexts/app-context";
 import { Router } from "../../pages/Router";
+import { useMigrations } from "../migrations/hooks";
+import Migrations from "../migrations/Migrations";
 import Share from "../share/Share";
 import "./App.css";
 import muiThemeLegacy from "./themes/dhis2-legacy.theme";
@@ -42,10 +43,11 @@ const App = ({ api, d2 }: { api: D2Api; d2: D2 }) => {
     const [showShareButton, setShowShareButton] = useState(false);
     const [loading, setLoading] = useState(true);
     const [appContext, setAppContext] = useState<AppContextState | null>(null);
+    const migrations = useMigrations(appContext);
 
     useEffect(() => {
         async function setup() {
-            const compositionRoot = getCompositionRoot(baseUrl);
+            const compositionRoot = getCompositionRoot({ url: baseUrl });
             const currentUser = await compositionRoot.users.getCurrent();
 
             setAppContext({ api, compositionRoot, currentUser });
@@ -56,12 +58,13 @@ const App = ({ api, d2 }: { api: D2Api; d2: D2 }) => {
         setup();
     }, [d2, api, baseUrl]);
 
-    if (loading) {
+    if (loading) return null;
+
+    if (migrations.state.type === "pending") {
         return (
-            <div style={{ margin: 20 }}>
-                <h3>Connecting to {baseUrl}...</h3>
-                <LinearProgress />
-            </div>
+            <AppContext.Provider value={appContext}>
+                <Migrations migrations={migrations} />
+            </AppContext.Provider>
         );
     }
 

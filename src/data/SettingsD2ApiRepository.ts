@@ -9,7 +9,7 @@ export class SettingsD2ApiRepository implements SettingsRepository {
 
     public get(): FutureData<Settings> {
         return this.storageRepository
-            .getObject(Namespaces.SETTINGS, { scheduling: {} })
+            .getObject<Settings>(Namespaces.SETTINGS, { scheduling: { enabled: false } })
             .flatMap(data => Future.fromPurifyEither(SettingsModel.decode(data)));
     }
 

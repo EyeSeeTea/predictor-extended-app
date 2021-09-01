@@ -7,7 +7,7 @@ import { NamedRef } from "../../../../domain/entities/DHIS2";
 import i18n from "../../../../locales";
 import { useAppContext } from "../../../contexts/app-context";
 import { useFuture } from "../../../hooks/useFuture";
-import { getPredictorFieldName } from "../PredictorForm";
+import { getPredictorFieldName } from "../utils";
 
 export const OutputFF: React.FC<CategoryOptionComboFFProps> = ({ input, optionComboField }) => {
     const { compositionRoot } = useAppContext();

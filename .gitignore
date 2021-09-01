@@ -9,6 +9,8 @@
 # production
 manifest.webapp
 /build
+dist/
+predictor-extended-server.js
 
 # misc
 .DS_Store
@@ -24,13 +26,14 @@ manifest.webapp
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
 
 src/locales/
 src/react-app.d.ts
 src/react-app-env.d.ts
-scripts/
 bak
 .eslintcache
+config.json
 
 # cypress
 cypress/screenshots/

@@ -61,7 +61,7 @@ export const defaultPredictor: Predictor = {
     id: "",
     name: "",
     output: { id: "", name: "" },
-    periodType: "Daily",
+    periodType: "Yearly",
     organisationUnitLevels: [],
     generator: { expression: "", description: "", slidingWindow: false, missingValueStrategy: "NEVER_SKIP" },
     sequentialSampleCount: 0,

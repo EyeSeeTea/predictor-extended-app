@@ -255,7 +255,7 @@ declare module "@dhis2/ui" {
         warning?: any;
         children?: React.ReactNode;
         onBlur?: (...args: any[]) => any;
-        onChange?: (...args: any[]) => any;
+        onChange?: (value: { selected: string }, event: MouseEvent) => void;
         onFocus?: (...args: any[]) => any;
     };
 

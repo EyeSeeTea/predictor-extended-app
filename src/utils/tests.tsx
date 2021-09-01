@@ -16,7 +16,7 @@ export function getTestD2() {
 export function getTestContext() {
     const { api, mock } = getMockApi();
     const context = {
-        compositionRoot: getCompositionRoot(""),
+        compositionRoot: getCompositionRoot({ url: "" }),
     };
 
     return { mock, api, context };

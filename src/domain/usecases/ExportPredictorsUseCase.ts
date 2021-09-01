@@ -1,7 +1,8 @@
 import _ from "lodash";
+import moment from "moment";
 import { UseCase } from "../../compositionRoot";
 import { getTemplates, interpolate } from "../../utils/uid-replacement";
-import { getPredictorName, PredictorFormField } from "../../webapp/components/predictor-form/PredictorForm";
+import { getPredictorName, PredictorFormField } from "../../webapp/components/predictor-form/utils";
 import { ExcelCell, ExcelModel } from "../entities/Excel";
 import { PredictorDetails } from "../entities/Predictor";
 import { ExcelRepository } from "../repositories/ExcelRepository";
@@ -62,6 +63,15 @@ export class ExportPredictorsUseCase implements UseCase {
                     address: { row: 0, column: index },
                 },
                 contents: { type: "formula" as const, value: field },
+                style: {
+                    bold: true,
+                    columnWidth: 20,
+                    rowHeight: 40,
+                    wrapText: true,
+                    horizontalAlignment: "center",
+                    verticalAlignment: "center",
+                    fill: { type: "solid", color: { rgb: "ffee58" } },
+                },
             })),
             ..._.flatMap(predictors, (predictor: PredictorDetails, row: number) =>
                 exportFields.map((key: PredictorFormField, column: number) => ({
@@ -83,8 +93,11 @@ export class ExportPredictorsUseCase implements UseCase {
             },
         };
 
+        const date = moment().format("YYYYMMDDHHmm");
+        const name = `predictor-export-${date}`;
         const buffer = await this.excelRepository.writeFile(emptyFile, file);
-        this.fileRepository.download({ type: "excel", name: "Test", buffer });
+
+        this.fileRepository.download({ type: "excel", name, buffer });
     }
 }
 

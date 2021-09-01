@@ -1,4 +1,4 @@
-import { TablePagination, TableSorting } from "@eyeseetea/d2-ui-components";
+import { TableSorting } from "@eyeseetea/d2-ui-components";
 import { UseCase } from "../../compositionRoot";
 import { Pager } from "../../types/d2-api";
 import { FutureData } from "../entities/Future";
@@ -10,7 +10,7 @@ export class ListPredictorsUseCase implements UseCase {
 
     public execute(
         filters?: ListPredictorsFilters,
-        paging?: TablePagination,
+        paging?: { page?: number; pageSize?: number; paging?: false },
         sorting?: TableSorting<PredictorDetails>
     ): FutureData<{
         pager: Pager;

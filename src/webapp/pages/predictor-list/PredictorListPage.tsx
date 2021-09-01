@@ -10,7 +10,7 @@ import {
     useObjectsTable,
     useSnackbar,
 } from "@eyeseetea/d2-ui-components";
-import { ArrowDownward, ArrowUpward, Delete, Edit, GridOn, QueuePlayNext, Schedule } from "@material-ui/icons";
+import { ArrowDownward, ArrowUpward, Delete, Edit, GridOn, QueuePlayNext, Tune } from "@material-ui/icons";
 import _ from "lodash";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FileRejection } from "react-dropzone";
@@ -20,20 +20,23 @@ import { NamedRef } from "../../../domain/entities/DHIS2";
 import { FormulaVariable } from "../../../domain/entities/FormulaVariable";
 import { MetadataResponse } from "../../../domain/entities/Metadata";
 import { PredictorDetails } from "../../../domain/entities/Predictor";
+import { PeriodObject } from "../../../domain/entities/SchedulerPeriod";
 import { ListPredictorsFilters } from "../../../domain/repositories/PredictorRepository";
 import i18n from "../../../locales";
 import { formatDate } from "../../../utils/dates";
 import { AlertIcon } from "../../components/alert-icon/AlertIcon";
 import { Dropzone, DropzoneRef } from "../../components/dropzone/Dropzone";
 import { ImportSummary } from "../../components/import-summary/ImportSummary";
-import { periodTypes } from "../../components/predictor-form/PredictorForm";
+import { periodTypes } from "../../components/predictor-form/utils";
+import { RunPredictorDialog, RunPredictorDialogProps } from "../../components/run-predictor-dialog/RunPredictorDialog";
 import { useAppContext } from "../../contexts/app-context";
 import { useFuture } from "../../hooks/useFuture";
 import { useQueryState } from "../../hooks/useQueryState";
 import { useReload } from "../../hooks/useReload";
+import { SchedulerInfo } from "./SchedulerInfo";
 
 export const PredictorListPage: React.FC = () => {
-    const { compositionRoot, currentUser } = useAppContext();
+    const { compositionRoot } = useAppContext();
     const loading = useLoading();
     const snackbar = useSnackbar();
     const history = useHistory();
@@ -43,6 +46,7 @@ export const PredictorListPage: React.FC = () => {
     const [state, setState] = useQueryState<ListPredictorsFilters>({});
     const [response, setResponse] = useState<MetadataResponse[]>();
     const [variables, setVariables] = useState<FormulaVariable[]>([]);
+    const [runPredictorDialogProps, setRunPredictorDialogProps] = useState<RunPredictorDialogProps | null>(null);
     const [reloadKey, reload] = useReload();
 
     const { data: predictorGroupOptions = [] } = useFuture(() => {
@@ -55,6 +59,10 @@ export const PredictorListPage: React.FC = () => {
         return compositionRoot.predictors
             .getDataElements()
             .map(dataElements => dataElements.map(({ id, name }) => ({ value: id, text: name })));
+    }, []);
+
+    const { data: allIds = [] } = useFuture(() => {
+        return compositionRoot.predictors.getAllIds();
     }, []);
 
     useEffect(() => {
@@ -70,10 +78,18 @@ export const PredictorListPage: React.FC = () => {
 
     const runPredictors = useCallback(
         async (ids: string[]) => {
-            loading.show(true, i18n.t("Running predictors"));
-            const results = await compositionRoot.predictors.run(ids).toPromise();
-            snackbar.info(results.map((response: any) => response?.message).join("\n"));
-            loading.reset();
+            setRunPredictorDialogProps({
+                onClose: () => setRunPredictorDialogProps(null),
+                onExecute: async (period: PeriodObject) => {
+                    setRunPredictorDialogProps(null);
+                    loading.show(true, i18n.t("Running predictors"));
+                    const results = await compositionRoot.predictors.run(ids, period).toPromise();
+                    const message = results.map(({ name, message }) => `${name}: ${message}`).join("\n");
+
+                    snackbar.info(message);
+                    loading.reset();
+                },
+            });
         },
         [compositionRoot, loading, snackbar]
     );
@@ -132,16 +148,16 @@ export const PredictorListPage: React.FC = () => {
                 {
                     name: "scheduling",
                     text: i18n.t("Scheduling"),
-                    sortable: true,
+                    sortable: false,
                     getValue: ({ scheduling }: PredictorDetails) => {
                         return `Sequence: ${scheduling.sequence}\nVariable: ${scheduling.variable}`;
                     },
                 },
-                { name: "output", text: i18n.t("Output data element"), sortable: true },
+                { name: "output", text: i18n.t("Output data element"), sortable: false },
                 {
                     name: "outputCombo",
                     text: i18n.t("Output category option"),
-                    sortable: true,
+                    sortable: false,
                     getValue: ({ output, outputCombo }) => (
                         <OutputComboCell output={output} outputCombo={outputCombo} variables={variables} />
                     ),
@@ -153,17 +169,17 @@ export const PredictorListPage: React.FC = () => {
                     sortable: false,
                     getValue: ({ generator }: PredictorDetails) => <FormulaCell formula={generator.expression} />,
                 },
-                { name: "predictorGroups", text: i18n.t("Predictor groups"), sortable: true },
+                { name: "predictorGroups", text: i18n.t("Predictor groups"), sortable: false },
                 {
                     name: "organisationUnitLevels",
                     text: i18n.t("Organisation unit levels"),
-                    sortable: true,
+                    sortable: false,
                     hidden: true,
                 },
                 {
                     name: "periodType",
                     text: i18n.t("Period type"),
-                    sortable: true,
+                    sortable: false,
                     getValue: ({ periodType }: PredictorDetails) => {
                         return periodTypes.find(({ value }) => value === periodType)?.label ?? "-";
                     },
@@ -214,7 +230,7 @@ export const PredictorListPage: React.FC = () => {
                 {
                     name: "execute",
                     text: i18n.t("Run"),
-                    multiple: false,
+                    multiple: true,
                     onClick: runPredictors,
                     icon: <QueuePlayNext />,
                 },
@@ -228,25 +244,23 @@ export const PredictorListPage: React.FC = () => {
             ],
             globalActions: _.compact([
                 {
-                    name: "import",
-                    text: i18n.t("Import excel"),
-                    onClick: openImportDialog,
-                    icon: <ArrowUpward />,
-                },
-                {
                     name: "export",
                     text: i18n.t("Download empty excel template"),
                     onClick: () => exportPredictors([]),
                     icon: <GridOn />,
                 },
-                process.env.NODE_ENV === "development" && currentUser.isAdmin
-                    ? {
-                          name: "scheduling",
-                          text: i18n.t("Scheduling options"),
-                          onClick: goToSettings,
-                          icon: <Schedule />,
-                      }
-                    : undefined,
+                {
+                    name: "import",
+                    text: i18n.t("Import excel template"),
+                    onClick: openImportDialog,
+                    icon: <ArrowUpward />,
+                },
+                {
+                    name: "settings",
+                    text: i18n.t("Settings"),
+                    onClick: goToSettings,
+                    icon: <Tune />,
+                },
             ]),
             // TODO: Bug in ObjectsList
             initialSorting: {
@@ -273,7 +287,6 @@ export const PredictorListPage: React.FC = () => {
         editPredictor,
         deletePredictor,
         openImportDialog,
-        currentUser,
         goToSettings,
         variables,
     ]);
@@ -339,6 +352,8 @@ export const PredictorListPage: React.FC = () => {
 
     return (
         <Wrapper>
+            {runPredictorDialogProps && <RunPredictorDialog {...runPredictorDialogProps} />}
+
             <Dropzone
                 ref={fileRef}
                 accept={"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}
@@ -348,6 +363,7 @@ export const PredictorListPage: React.FC = () => {
                     {...tableProps}
                     onChangeSearch={search => onChangeFilter({ search })}
                     initialSearch={state.search ?? ""}
+                    ids={allIds}
                 >
                     <React.Fragment>
                         {state.predictorGroups && state.predictorGroups.length > 0 && (
@@ -372,6 +388,8 @@ export const PredictorListPage: React.FC = () => {
                             isFilter={true}
                             onChange={onChangeLastUpdatedFilter}
                         />
+
+                        <SchedulerInfo />
                     </React.Fragment>
                 </ObjectsList>
             </Dropzone>

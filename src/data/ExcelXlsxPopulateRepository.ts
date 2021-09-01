@@ -64,6 +64,14 @@ export class ExcelXlsxPopulateRepository implements ExcelRepository {
                 const location = parseLocation(sheet, cell.ref);
                 if (cell.contents.type === "formula") location.formula(cell.contents.value);
                 else location.value(cell.contents.value);
+
+                if (cell.style) {
+                    const { columnWidth, rowHeight, ...props } = cell.style;
+                    if (columnWidth && isCell(location)) location.column().width(columnWidth);
+                    if (rowHeight && isCell(location)) location.row().height(rowHeight);
+
+                    location.style(props);
+                }
             }
         }
 

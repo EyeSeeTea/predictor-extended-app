@@ -141,12 +141,12 @@ export class ReadPredictorsExcelUseCase implements UseCase {
                 organisationUnitLevels,
                 generator: {
                     ...object.generator,
-                    expression: interpolate(object.generator.expression ?? "", dictionary),
+                    expression: interpolate(object.generator?.expression ?? "", dictionary),
                 },
                 sampleSkipTest: object.sampleSkipTest
                     ? {
                           ...object.sampleSkipTest,
-                          expression: interpolate(object.sampleSkipTest.expression ?? "", dictionary),
+                          expression: interpolate(object.sampleSkipTest?.expression ?? "", dictionary),
                       }
                     : undefined,
             };

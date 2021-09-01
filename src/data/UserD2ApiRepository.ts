@@ -1,13 +1,14 @@
+import { Instance } from "../domain/entities/Instance";
 import { User } from "../domain/entities/User";
 import { UserRepository } from "../domain/repositories/UserRepository";
 import { D2Api } from "../types/d2-api";
-import { getD2APiFromUrl } from "./utils/d2-api";
+import { getD2APiFromInstance } from "./utils/d2-api";
 
 export class UserD2ApiRepository implements UserRepository {
     private api: D2Api;
 
-    constructor(baseUrl: string) {
-        this.api = getD2APiFromUrl(baseUrl);
+    constructor(instance: Instance) {
+        this.api = getD2APiFromInstance(instance);
     }
 
     async getCurrent(): Promise<User> {

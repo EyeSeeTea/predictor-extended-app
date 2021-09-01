@@ -1,5 +1,6 @@
 import { FilterBase } from "@eyeseetea/d2-api/api/common";
 import _ from "lodash";
+import { Instance } from "../../domain/entities/Instance";
 import { D2Api } from "../../types/d2-api";
 
 export function getMajorVersion(version: string): number {
@@ -8,8 +9,15 @@ export function getMajorVersion(version: string): number {
     return Number(apiVersion);
 }
 
-export function getD2APiFromUrl(baseUrl: string, auth?: { username: string; password: string }) {
-    return new D2Api({ baseUrl, auth, backend: "fetch" });
+export function getD2APiFromInstance(instance: Instance) {
+    return new D2Api({
+        baseUrl: instance.url,
+        auth:
+            instance.username && instance.password
+                ? { username: instance.username, password: instance.password }
+                : undefined,
+        backend: "fetch",
+    });
 }
 
 function applyFieldTransformers(key: string, value: any) {

@@ -1,3 +1,5 @@
+import { Style } from "@eyeseetea/xlsx-populate";
+
 export interface Address {
     row: number;
     column: number;
@@ -44,6 +46,7 @@ export type Ref = CellRef | RangeRef;
 export interface ExcelCell {
     ref: Ref;
     contents: CellContents;
+    style?: Style & { columnWidth?: number; rowHeight?: number };
 }
 
 export interface ExcelSheet {
